@@ -6,6 +6,7 @@ import argparse
 plt.rcParams['font.family'] = 'Times New Roman'
 plt.rcParams['font.family'] = 'sans-serif'
 plt.rcParams['font.sans-serif'] = ['Noto Sans CJK JP']
+plt.rcParams["font.size"]=18
 path = os.getcwd()
 
 parser = argparse.ArgumentParser()
@@ -72,6 +73,7 @@ def read_float_row(sheetname, label, row, index=None):
     indexlist[label] = buf_index
 
 
+read_float_column(str(0).translate(HAN2ZEN)+'次',"wave"+str(0),2)
 for i in range(1,65):
     try:
         read_float_column(str(i).translate(HAN2ZEN)+'次',"wave"+str(i),i+3)
@@ -83,14 +85,14 @@ read_float_row('データ',"p",6,0)
 read_float_row('データ',"A",5,0)
 
 
-for i in range(1,65):
+for i in range(0,65):
     try:
         fig1=plt.figure(figsize=(15,10))
         g=fig1.add_subplot()
         g.yaxis.grid(linestyle='--', lw=1, alpha=0.6, color='black')
         g.plot(indexlist["in"], datalist["in"], 'o', color='none', markersize=5, markeredgewidth=2, markeredgecolor='dodgerblue', alpha=0.8, label='入力')
         g.plot(indexlist["wave"+str(i)], datalist["wave"+str(i)], alpha=0.8, label=str(i)+'次', color='darkgreen')
-        g.legend(loc=4, frameon=True, facecolor='none', edgecolor='lightgray',fontsize=14, markerscale=0.7)
+        g.legend(loc='lower right', frameon=True, facecolor='none', edgecolor='lightgray',fontsize=14, markerscale=0.7)
         plt.savefig(outdir+'wave'+str(i)+'.png', bbox_inches="tight", pad_inches=0.05)
     except:
         continue
